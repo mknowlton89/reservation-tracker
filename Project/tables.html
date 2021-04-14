@@ -1,0 +1,97 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+    <header class="main-container">
+        <h1>Hot Restaurants</h1>
+        <hr>
+        <h2>Current Reservations and Waiting List</h2>
+        <div class="btn-div">
+            <a id="make-reservations" href="/reservations" class="button">Make Reservation</a>
+            <a id="go-home" href="/" class="button">Go Home</a>
+        </div>
+    </header>
+    <main>
+        <div>
+            <h1>Current Reservations</h1>
+        </div>
+        <div id="reservation-container">
+            <!-- <div class="reservation-card">
+                <div class="reservation-card-number">
+                    <h2>Table #1</h2>
+                </div>
+                <div class="reservation-details">
+                    <h2>ID: 123</h2>
+                    <h2>Name: Test</h2>
+                    <h2>Email: Test</h2>
+                    <h2>Phone: 1234</h2>
+                </div>
+            </div> -->
+        </div>
+    </main>
+    <!-- <script src="./js/tables.js" async defer></script> -->
+    <script type="text/javascript">
+
+        const reservationContainer = document.getElementById('reservation-container');
+        
+        const getReservations = () => {
+            fetch("/currentreservations", {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    
+                    console.log(data);
+                    // const { id, name, email, phone } = data;
+
+                    if (data.length < 5) {
+
+                        for (let i = 0; i < data.length; i++) {
+                            // Create
+                            const reservationCard = document.createElement("div");
+                            const reservationCardNumber = document.createElement('div');
+                            const reservationTableNumber = document.createElement('h2')
+
+                            reservationContainer.append(reservationCard);
+                            reservationContainer.append(reservationCardNumber);
+                            reservationCardNumber.append(reservationTableNumber);
+                            reservationTableNumber.textContent = 'Table #' + (i + 1);
+
+                            const reservationDetails = document.createElement('div');
+                            reservationContainer.append(reservationDetails);
+
+                            const reservationId = document.createElement('h2');
+                            reservationId.textContent = "ID: " + data[i].id;
+                            reservationDetails.append(reservationId);
+
+                            const reservationName = document.createElement('h2');
+                            reservationName.textContent = "Name: " + data[i].name;
+                            reservationDetails.append(reservationName);
+
+                            const reservationEmail = document.createElement('h2');
+                            reservationEmail.textContent = "Email: " + data[i].email;
+                            reservationDetails.append(reservationEmail);
+
+                            const reservationPhone = document.createElement('h2');
+                            reservationPhone.textContent = "Phone Number: " + data[i].phone;
+                            reservationDetails.append(reservationPhone);
+                        }
+                    }
+                })
+        }
+        getReservations();
+    </script>
+</body>
+
+</html>
