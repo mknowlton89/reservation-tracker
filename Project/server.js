@@ -21,6 +21,8 @@ const reservations = [
     }
 ];
 
+const waitList = [];
+
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
 app.get('/tables', (req, res) => res.sendFile(path.join(__dirname, 'tables.html')));
@@ -29,15 +31,22 @@ app.get('/reservations', (req, res) => res.sendFile(path.join(__dirname, 'reserv
 
 app.get('/currentreservations', (req, res) => res.json(reservations));
 
+app.get('/currentwaitlist', (req, res) => res.json(waitList));
+
 app.post('/api/reservation', (req, res) => {
 
     console.log(req);
     const newReservation = req.body;
 
-    reservations.push(newReservation);
+    if (reservations.length <= 4) {
+        console.log("Reservation Added!");
+        reservations.push(newReservation);
+    } else {
+        console.log("Reservation list is full. Added to waitlist");
+        waitList.push(newReservation);
+    }
     res.json(newReservation);
 })
-
 
 
 app.listen(PORT, () => console.log(`App listening on PORT ${PORT}`));

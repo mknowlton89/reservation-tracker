@@ -41,7 +41,7 @@
     <script type="text/javascript">
 
         const reservationContainer = document.getElementById('reservation-container');
-        
+
         const getReservations = () => {
             fetch("/currentreservations", {
                 method: 'GET',
@@ -51,42 +51,39 @@
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    
+
                     console.log(data);
                     // const { id, name, email, phone } = data;
 
-                    if (data.length < 5) {
+                    for (let i = 0; i < data.length; i++) {
+                        // Create
+                        const reservationCard = document.createElement("div");
+                        const reservationCardNumber = document.createElement('div');
+                        const reservationTableNumber = document.createElement('h2')
 
-                        for (let i = 0; i < data.length; i++) {
-                            // Create
-                            const reservationCard = document.createElement("div");
-                            const reservationCardNumber = document.createElement('div');
-                            const reservationTableNumber = document.createElement('h2')
+                        reservationContainer.append(reservationCard);
+                        reservationContainer.append(reservationCardNumber);
+                        reservationCardNumber.append(reservationTableNumber);
+                        reservationTableNumber.textContent = 'Table #' + (i + 1);
 
-                            reservationContainer.append(reservationCard);
-                            reservationContainer.append(reservationCardNumber);
-                            reservationCardNumber.append(reservationTableNumber);
-                            reservationTableNumber.textContent = 'Table #' + (i + 1);
+                        const reservationDetails = document.createElement('div');
+                        reservationContainer.append(reservationDetails);
 
-                            const reservationDetails = document.createElement('div');
-                            reservationContainer.append(reservationDetails);
+                        const reservationId = document.createElement('h2');
+                        reservationId.textContent = "ID: " + data[i].id;
+                        reservationDetails.append(reservationId);
 
-                            const reservationId = document.createElement('h2');
-                            reservationId.textContent = "ID: " + data[i].id;
-                            reservationDetails.append(reservationId);
+                        const reservationName = document.createElement('h2');
+                        reservationName.textContent = "Name: " + data[i].name;
+                        reservationDetails.append(reservationName);
 
-                            const reservationName = document.createElement('h2');
-                            reservationName.textContent = "Name: " + data[i].name;
-                            reservationDetails.append(reservationName);
+                        const reservationEmail = document.createElement('h2');
+                        reservationEmail.textContent = "Email: " + data[i].email;
+                        reservationDetails.append(reservationEmail);
 
-                            const reservationEmail = document.createElement('h2');
-                            reservationEmail.textContent = "Email: " + data[i].email;
-                            reservationDetails.append(reservationEmail);
-
-                            const reservationPhone = document.createElement('h2');
-                            reservationPhone.textContent = "Phone Number: " + data[i].phone;
-                            reservationDetails.append(reservationPhone);
-                        }
+                        const reservationPhone = document.createElement('h2');
+                        reservationPhone.textContent = "Phone Number: " + data[i].phone;
+                        reservationDetails.append(reservationPhone);
                     }
                 })
         }

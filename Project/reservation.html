@@ -40,7 +40,6 @@
     addBtn.addEventListener('click', (e) => {
         e.preventDefault();
 
-        alert("Listener is working.");
         let resId = document.getElementById('id').value.trim();
         let resName = document.getElementById('name').value.trim();
         let resEmail = document.getElementById('email').value.trim();
@@ -62,7 +61,7 @@
         })
           .then((response) => response.json())
           .then((data) => {
-            alert(`Added Reservation!`);
+            alert(`Success!`);
           })
           .catch((error) => {
             console.error('Error:', error);
